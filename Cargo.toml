@@ -1,0 +1,11 @@
+[package]
+name = "dabbit-producer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+
+[dev-dependencies]
+actix-rt = "2.7.0"
+hyper = { version = "0.14", features = ["full"] }
