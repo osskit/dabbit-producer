@@ -1,4 +1,4 @@
-use actix_web::{get, HttpResponse, Responder};
+use actix_web::{get, post, HttpResponse, Responder};
 
 #[get("/")]
 pub async fn hello() -> impl Responder {
@@ -7,5 +7,10 @@ pub async fn hello() -> impl Responder {
 
 #[get("/ready")]
 pub async fn ready() -> impl Responder {
+    HttpResponse::Ok()
+}
+
+#[post("/produce")]
+pub async fn produce() -> impl Responder {
     HttpResponse::Ok()
 }

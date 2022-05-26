@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/osskit/dabbit-producer#readme",
   "devDependencies": {
+    "@cloudamqp/amqp-client": "^2.0.3",
     "@types/jest": "^27.5.1",
     "jest": "^28.1.0",
     "ts-jest": "^28.0.3",
