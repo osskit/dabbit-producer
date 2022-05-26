@@ -4,7 +4,11 @@
   "private": true,
   "description": "Dockerized rabbitmq producer",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "yarn test:closed-box",
+    "test:closed-box": "yarn test:closed-box:teardown && yarn test:closed-box:setup && yarn test:closed-box:start && yarn test:closed-box:teardown",
+    "test:closed-box:start": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --config tests/jest.config.ts",
+    "test:closed-box:teardown": "cd tests && docker-compose down --remove-orphans",
+    "test:closed-box:setup": "cd tests && docker-compose pull && docker-compose build && docker-compose up -d"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/osskit/dabbit-producer/issues"
   },
-  "homepage": "https://github.com/osskit/dabbit-producer#readme"
+  "homepage": "https://github.com/osskit/dabbit-producer#readme",
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.3",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.7.2"
+  }
 }

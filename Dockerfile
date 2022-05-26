@@ -3,7 +3,7 @@ WORKDIR /usr/src/service
 
 RUN USER=root cargo init --bin .
 COPY ./Cargo.toml ./Cargo.lock ./
-RUN cargo build --release && rm src/*.rs && rm -rf target/release/dabbit-producer
+RUN cargo build --release && rm src/*.rs && rm target/release/deps/dabbit_producer*
 COPY ./src ./src
 RUN cargo install --path .
 
