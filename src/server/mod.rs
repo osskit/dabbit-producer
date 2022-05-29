@@ -2,7 +2,7 @@ use actix_web::web;
 
 pub mod routes;
 
-use routes::{hello, ready, produce};
+use routes::{hello, produce, ready};
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(ready);

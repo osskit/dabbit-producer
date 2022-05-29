@@ -1,14 +1,18 @@
-fn connect() {
-    let conn = Connection::connect(
-        &addr,
+use lapin::{
+    BasicProperties, Connection,
+    ConnectionProperties, Error
+};
+
+async fn connect(amqp_addr: &str) -> Result<Connection, Error> {
+    Connection::connect(
+        &amqp_addr,
         ConnectionProperties::default(),
     )
-    .await?;
+    .await
+}
 
-    info!("CONNECTED");
-
-    let channel_a = conn.create_channel().await?;
-    let channel_b = conn.create_channel().await?;
+async fn create_channel(connection: Connection) -> Result<(), Error>{
+    let channel_a = connection.create_channel().await?;
 
     let queue = channel_a
         .queue_declare(
@@ -17,27 +21,6 @@ fn connect() {
             FieldTable::default(),
         )
         .await?;
-
-    info!(?queue, "Declared queue");
-
-    let mut consumer = channel_b
-        .basic_consume(
-            "hello",
-            "my_consumer",
-            BasicConsumeOptions::default(),
-            FieldTable::default(),
-        )
-        .await?;
-    async_global_executor::spawn(async move {
-        info!("will consume");
-        while let Some(delivery) = consumer.next().await {
-            let delivery = delivery.expect("error in consumer");
-            delivery
-                .ack(BasicAckOptions::default())
-                .await
-                .expect("ack");
-        }
-    }).detach();
 
     let payload = b"Hello world!";
 

@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use dotenv::dotenv;
 
 #[derive(Deserialize, Debug)]
 pub struct Environment {
@@ -6,5 +7,7 @@ pub struct Environment {
 }
 
 pub fn get_environment() -> Result<Environment, envy::Error> {
+    dotenv().ok();
+
     envy::from_env::<Environment>()
 }

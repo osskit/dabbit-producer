@@ -1,7 +1,11 @@
-use actix_web::{get, post, HttpResponse, Responder};
+use actix_web::{get, post, web, HttpResponse, Responder};
+
+use crate::framework::environment::Environment;
 
 #[get("/")]
-pub async fn hello() -> impl Responder {
+pub async fn hello(environment: web::Data<Environment>) -> impl Responder {
+    println!("port is now: {}", environment.port);
+
     HttpResponse::Ok().body("Hello world!")
 }
 
@@ -12,5 +16,6 @@ pub async fn ready() -> impl Responder {
 
 #[post("/produce")]
 pub async fn produce() -> impl Responder {
+    
     HttpResponse::Ok()
 }
